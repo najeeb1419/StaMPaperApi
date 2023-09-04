@@ -20,6 +20,27 @@ namespace IzlaCRM.Controllers
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
+
+
+        [Route("GetReceipts")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetReceipts()
+        {
+            try
+            {
+                var result = await _unitOfWork.ReceiptRepository.GetAllAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred");
+                return StatusCode(500, "An error occurred");
+            }
+        }
+
         [Route("AddReceipt")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
