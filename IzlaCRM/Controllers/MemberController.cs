@@ -20,6 +20,29 @@ namespace IzlaCRM.Controllers
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
+
+        [Route("GetMembers")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetMembers()
+        {
+            try
+            {
+                var data = await _unitOfWork.MemberRepository.GetAllAsync();
+                await _unitOfWork.SaveChangesAsync();
+
+
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred");
+                return StatusCode(500, "An error occurred");
+            }
+        }
+
         [Route("AddMember")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -52,8 +75,8 @@ namespace IzlaCRM.Controllers
         {
             try
             {
-            var result=    await _unitOfWork.MemberRepository.GetByIdAsync(id);
-            return Ok(result);
+                var result = await _unitOfWork.MemberRepository.GetByIdAsync(id);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -61,13 +84,15 @@ namespace IzlaCRM.Controllers
                 return StatusCode(500, "An error occurred");
             }
         }
+
+        [Route("UpdateMember")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public async Task<IActionResult> Updatecontent( Member input)
+        public async Task<IActionResult> UpdateMember(Member input)
         {
-      
+
             try
             {
                 await _unitOfWork.MemberRepository.UpdateAsync(input);
