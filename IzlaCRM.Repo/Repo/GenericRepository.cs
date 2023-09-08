@@ -36,6 +36,9 @@ namespace IzlaCRM.Repo.Repo
         }
         public async Task<IEnumerable<T>> GetAllAsync()
         {
+            //var entity =  await (DbSet.Cast<IDeleted>().Where(x=>x.IsDeleted==false).ToListAsync());
+            //return entity.Cast<T>();
+
             return await DbSet.ToListAsync();
         }
 

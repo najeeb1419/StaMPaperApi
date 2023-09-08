@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,11 @@ namespace IzlaCRM.Entity.Common
         public DateTime CreationTime { get; set; }
         public long? LastModifierUserId { get; set; }
         public DateTime? LastModificationTime { get; set; }
+    }
+
+    public interface IDeleted
+    {
+        bool IsDeleted { get; set; }
     }
 
 

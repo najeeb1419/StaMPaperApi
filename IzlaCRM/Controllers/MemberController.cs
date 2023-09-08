@@ -31,9 +31,8 @@ namespace IzlaCRM.Controllers
             try
             {
                 var data = await _unitOfWork.MemberRepository.GetAllAsync();
+                data =data.Where(x => x.IsDeleted == false);
                 await _unitOfWork.SaveChangesAsync();
-
-
                 return Ok(data);
             }
             catch (Exception ex)
@@ -54,8 +53,6 @@ namespace IzlaCRM.Controllers
             {
                 await _unitOfWork.MemberRepository.AddAsync(input);
                 await _unitOfWork.SaveChangesAsync();
-
-
                 return Ok(input);
             }
             catch (Exception ex)
@@ -92,12 +89,32 @@ namespace IzlaCRM.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> UpdateMember(Member input)
         {
-
             try
             {
                 await _unitOfWork.MemberRepository.UpdateAsync(input);
                 await _unitOfWork.SaveChangesAsync();
                 return Ok(input);
+            }
+            catch (Exception ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                _logger.LogError(ex, "An error occurred while updating the content.");
+                return StatusCode(500, "An error occurred while updating the content.");
+            }
+        }
+
+        [Route("DeleteMember")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteMember(int id)
+        {
+            try
+            {
+                await _unitOfWork.MemberRepository.Delete(id);
+                await _unitOfWork.SaveChangesAsync();
+                return Ok("Ok");
             }
             catch (Exception ex)
             {
