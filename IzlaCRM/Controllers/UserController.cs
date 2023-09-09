@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Security.Cryptography;
+using Abp.UI;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -137,12 +138,25 @@ namespace IzlaCRM.Controllers
         //To authenticate user
         private User? Authenticate(UserLoginModel userLogin)
         {
-            var currentUser = _unitOfWork.UserRepository.Finduser(userLogin.Email, userLogin.Password);
-            if (currentUser != null)
+            try
             {
-                return currentUser;
+                var currentUser = _unitOfWork.UserRepository.Finduser(userLogin.Email, userLogin.Password);
+                if (currentUser != null)
+                {
+                    return currentUser;
+                }
+                else
+                {
+                    throw new UserFriendlyException("User not found.");
+                }
             }
-            return null;
+            catch (Exception)
+            {
+
+                throw new UserFriendlyException("There is an error"); ;
+            }
+           
+            
         }
     }
 }
