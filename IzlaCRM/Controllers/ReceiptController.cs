@@ -1,4 +1,5 @@
 ﻿using IzlaCRM.Entity.Entities;
+using IzlaCRM.Entity.Models;
 using IzlaCRM.Repo.IRepo;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,20 @@ namespace IzlaCRM.Controllers
             try
             {
                 var result = await _unitOfWork.ReceiptRepository.GetAllAsync();
-                return Ok(result);
+
+                var receipts = result.Select(o=> new ReceiptModel()
+                 {
+                     Id = o.Id,
+                     Amount = o.Amount,
+                     RemainingAmount = o.RemainingAmount,
+                     TenantId = o.TenantId,
+                     IsActive = o.IsActive,
+                     Status = o.LookUp.DisplayName,
+                     Style = o.LookUp.Style,
+                     Member = o.Member
+                 }).ToList();
+
+                return Ok(receipts);
             }
             catch (Exception ex)
             {
