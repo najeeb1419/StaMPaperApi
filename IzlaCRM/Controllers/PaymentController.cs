@@ -61,11 +61,32 @@ namespace IzlaCRM.Controllers
                 return StatusCode(500, "An error occurred");
             }
         }
+
+        [Route("GetPaymentByReceiptId")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public  IActionResult GetPaymentByReceiptId(int id)
+        {
+            try
+            {
+                var result =  _unitOfWork.PaymentRepository.GetPaymentByReceiptId(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred");
+                return StatusCode(500, "An error occurred");
+            }
+        }
+
+        [Route("UpdatePayment")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public async Task<IActionResult> Updatecontent( Payment input)
+        public async Task<IActionResult> UpdatePayment( Payment input)
         {
       
             try

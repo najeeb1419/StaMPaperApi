@@ -28,25 +28,12 @@ namespace IzlaCRM.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public async Task<IActionResult> GetReceipts()
+        public  IActionResult GetReceipts()
         {
             try
             {
-                var result = await _unitOfWork.ReceiptRepository.GetAllAsync();
-
-                var receipts = result.Select(o=> new ReceiptModel()
-                 {
-                     Id = o.Id,
-                     Amount = o.Amount,
-                     RemainingAmount = o.RemainingAmount,
-                     TenantId = o.TenantId,
-                     IsActive = o.IsActive,
-                     Status = o.LookUp.DisplayName,
-                     Style = o.LookUp.Style,
-                     Member = o.Member
-                 }).ToList();
-
-                return Ok(receipts);
+                var result =  _unitOfWork.ReceiptRepository.GetReceipts();
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -96,11 +83,13 @@ namespace IzlaCRM.Controllers
                 return StatusCode(500, "An error occurred");
             }
         }
+
+        [Route("UpdateReceipt")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public async Task<IActionResult> Updatecontent( Receipt input)
+        public async Task<IActionResult> UpdateReceipt( Receipt input)
         {
       
             try

@@ -9,5 +9,6 @@ namespace IzlaCRM.Repo.IRepo
 {
     public interface IPaymentRepository : IGenericRepository<Payment>
     {
+        List<Payment> GetPaymentByReceiptId(int id);
     }
 }

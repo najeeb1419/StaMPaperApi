@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IzlaCRM.Entity.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace IzlaCRM.Repo.Repo
 {
@@ -14,6 +16,23 @@ namespace IzlaCRM.Repo.Repo
     {
         public ReceiptRepository(ApplicationDbContext context, ILogger logger) : base(context, logger)
         {
+        }
+
+        public  List<ReceiptModel> GetReceipts()
+        {
+            var receipts = DbSet.Include(p => p.Member).Include(x => x.Payments);
+            return receipts.Select(o => new ReceiptModel()
+            {
+                Id = o.Id,
+                Amount = o.Amount,
+                RemainingAmount = o.RemainingAmount,
+                TenantId = o.TenantId,
+                IsActive = o.IsActive,
+                Status = o.LookUp.DisplayName,
+                Style = o.LookUp.Style,
+                Member = o.Member
+            }).ToList();
+
         }
     }
 }
