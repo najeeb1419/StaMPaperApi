@@ -4,6 +4,7 @@ using IzlaCRM.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IzlaCRM.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230913211611_Bank employee table")]
+    partial class Bankemployeetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,7 +139,7 @@ namespace IzlaCRM.DAL.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("BankemployeeId")
+                    b.Property<int?>("BankeEmployeeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationTime")
@@ -167,6 +169,9 @@ namespace IzlaCRM.DAL.Migrations
                     b.Property<int>("LookUpId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("RemainingAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -175,7 +180,7 @@ namespace IzlaCRM.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankemployeeId");
+                    b.HasIndex("BankeEmployeeId");
 
                     b.HasIndex("LookUpId");
 
@@ -875,9 +880,7 @@ namespace IzlaCRM.DAL.Migrations
                 {
                     b.HasOne("IzlaCRM.Entity.Entities.BankEmployee", "BankeEmployee")
                         .WithMany()
-                        .HasForeignKey("BankemployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BankeEmployeeId");
 
                     b.HasOne("IzlaCRM.Entity.Entities.LookUp", "LookUp")
                         .WithMany()

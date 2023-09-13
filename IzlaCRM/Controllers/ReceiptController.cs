@@ -105,5 +105,27 @@ namespace IzlaCRM.Controllers
                 return StatusCode(500, "An error occurred while updating the content.");
             }
         }
+
+
+        [Route("DeleteReceipt")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteReceipt(int id)
+        {
+            try
+            {
+                await _unitOfWork.ReceiptRepository.Delete(id);
+                await _unitOfWork.SaveChangesAsync();
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                _logger.LogError(ex, "An error occurred while deleting the content.");
+                return StatusCode(500, "An error occurred while deleting the content.");
+            }
+        }
     }
 }

@@ -3,11 +3,11 @@ using IzlaCRM.Entity.Entities;
 
 namespace IzlaCRM.Entity.Models
 {
-    public class ReceiptModel : FullAudited
+    public class BankEmployeeReceiptModel : FullAudited
     {
         public virtual int TenantId { get; set; }
-        public int MemberId { get; set; }
-        public Entities.Member Member { get; set; }
+        public int BankemployeeId { get; set; }
+        public BankEmployee BankeEmployee { get; set; }
         public ICollection<Payment> Payments { get; set; }
         public int LookUpId { get; set; }
         public string Status { get; set; }

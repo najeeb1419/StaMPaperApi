@@ -1,4 +1,5 @@
 ﻿using IzlaCRM.Entity.Entities;
+using IzlaCRM.Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace IzlaCRM.Repo.IRepo
 {
     public interface IPaymentRepository : IGenericRepository<Payment>
     {
-        List<Payment> GetPaymentByReceiptId(int id);
+        List<PaymentModel> GetPaymentByReceiptId(int id);
     }
 }

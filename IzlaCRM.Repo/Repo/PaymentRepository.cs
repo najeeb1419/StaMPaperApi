@@ -18,9 +18,19 @@ namespace IzlaCRM.Repo.Repo
         {
         }
 
-        public List<Payment> GetPaymentByReceiptId(int id)
+        public List<PaymentModel> GetPaymentByReceiptId(int id)
         {
-            return DbSet.Where(p => p.ReceiptId== id).ToList();
+            var result = DbSet.Include(x=>x.Account).Where(p => p.ReceiptId== id).Select(x=> new PaymentModel()
+            {
+                Id=x.Id,
+                ReceiptId=x.ReceiptId,
+                SendingAmount=x.SendingAmount,
+                CreationTime=x.CreationTime,
+                SenderAccountNo=x.Account.AccountNo
+
+            }).ToList();
+
+            return result;
         }
     }
 }

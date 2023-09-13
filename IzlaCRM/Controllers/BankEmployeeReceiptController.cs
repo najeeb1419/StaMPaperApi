@@ -20,6 +20,27 @@ namespace IzlaCRM.Controllers
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
+
+
+        [Route("GetBankEmployeeReceipts")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public IActionResult GetBankEmployeeReceipts()
+        {
+            try
+            {
+                var result = _unitOfWork.BankEmployeeReceiptRepository.GetBankEmployeeReceipts();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred");
+                return StatusCode(500, "An error occurred");
+            }
+        }
+
         [Route("AddBankEmployeeReceipt")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -52,8 +73,8 @@ namespace IzlaCRM.Controllers
         {
             try
             {
-            var result=    await _unitOfWork.BankEmployeeReceiptRepository.GetByIdAsync(id);
-            return Ok(result);
+                var result = await _unitOfWork.BankEmployeeReceiptRepository.GetByIdAsync(id);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -61,13 +82,15 @@ namespace IzlaCRM.Controllers
                 return StatusCode(500, "An error occurred");
             }
         }
+
+        [Route("UpdateBankEmployeeReceipt")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public async Task<IActionResult> Updatecontent( BankEmployeeReceipt input)
+        public async Task<IActionResult> UpdateBankEmployeeReceipt(BankEmployeeReceipt input)
         {
-      
+
             try
             {
                 await _unitOfWork.BankEmployeeReceiptRepository.UpdateAsync(input);
@@ -79,6 +102,28 @@ namespace IzlaCRM.Controllers
                 await _unitOfWork.RollbackAsync();
                 _logger.LogError(ex, "An error occurred while updating the content.");
                 return StatusCode(500, "An error occurred while updating the content.");
+            }
+        }
+
+
+        [Route("DeleteBankEmployeeReceipt")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteBankEmployeeReceipt(int id)
+        {
+            try
+            {
+                await _unitOfWork.BankEmployeeReceiptRepository.Delete(id);
+                await _unitOfWork.SaveChangesAsync();
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                await _unitOfWork.RollbackAsync();
+                _logger.LogError(ex, "An error occurred while deleting the content.");
+                return StatusCode(500, "An error occurred while deleting the content.");
             }
         }
     }

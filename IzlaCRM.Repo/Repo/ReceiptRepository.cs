@@ -20,7 +20,7 @@ namespace IzlaCRM.Repo.Repo
 
         public  List<ReceiptModel> GetReceipts()
         {
-            var receipts = DbSet.Include(p => p.Member).Include(x => x.Payments);
+            var receipts = DbSet.Include(p => p.Member).Where(x=>x.IsDeleted==false);
             return receipts.Select(o => new ReceiptModel()
             {
                 Id = o.Id,
