@@ -42,6 +42,7 @@ namespace IzlaCRM.Repo.Repo
         private IMemberRepository _memberRepository;
         private IPaymentRepository _paymentRepository;
         private IReceiptRepository _receiptRepository;
+        private IBankEmployeePaymentRepository _bankEmployeePaymentRepository;
         public IUserRepository UserRepository
         {
             get { _userRepository ??= new UserRepository(_context, _logger); return _userRepository; }
@@ -182,6 +183,11 @@ namespace IzlaCRM.Repo.Repo
         public IReceiptRepository ReceiptRepository
         {
             get { _receiptRepository ??= new ReceiptRepository(_context, _logger); return _receiptRepository; }
+        }
+
+        public IBankEmployeePaymentRepository BankEmployeePaymentRepository
+        {
+            get { _bankEmployeePaymentRepository ??= new BankEmployeePaymentRepository(_context, _logger); return _bankEmployeePaymentRepository; }
         }
 
         public UnitOfWork(ApplicationDbContext context, ILoggerFactory loggerFactory)

@@ -45,6 +45,7 @@ namespace IzlaCRM.Repo.IRepo
         IMemberRepository MemberRepository { get; }
         IPaymentRepository PaymentRepository { get; }
         IReceiptRepository ReceiptRepository { get; }
+        IBankEmployeePaymentRepository BankEmployeePaymentRepository { get; }
         Task BeginTransactionAsync();
         Task CommitAsync();
         Task RollbackAsync();

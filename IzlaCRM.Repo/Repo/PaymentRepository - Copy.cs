@@ -12,18 +12,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IzlaCRM.Repo.Repo
 {
-    public class BankEmployeePaymentRepository : GenericRepository<BankEmployeePayment>, IBankEmployeePaymentRepository
+    public class PaymentRepository : GenericRepository<Payment>, IPaymentRepository
     {
-        public BankEmployeePaymentRepository(ApplicationDbContext context, ILogger logger) : base(context, logger)
+        public PaymentRepository(ApplicationDbContext context, ILogger logger) : base(context, logger)
         {
         }
 
-        public List<BankEmployeePaymentModel> GetBankEmployeePaymentByReceiptId(int id)
+        public List<PaymentModel> GetPaymentByReceiptId(int id)
         {
-            var result = DbSet.Include(x=>x.Account).Where(p => p.BankEmployeeReceiptId== id).Select(x=> new BankEmployeePaymentModel()
+            var result = DbSet.Include(x=>x.Account).Where(p => p.ReceiptId== id).Select(x=> new PaymentModel()
             {
                 Id=x.Id,
-                BankEmployeeReceiptId=x.BankEmployeeReceiptId,
+                ReceiptId=x.ReceiptId,
                 SendingAmount=x.SendingAmount,
                 CreationTime=x.CreationTime,
                 SenderAccountNo=x.Account.AccountNo

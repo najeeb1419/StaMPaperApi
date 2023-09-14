@@ -52,10 +52,7 @@ namespace IzlaCRM.Repo.Repo
         {
             Type baseEntityInfo = typeof(T);
             PropertyInfo CreationTimeField = baseEntityInfo.GetProperty("CreationTime");
-            if (CreationTimeField != null)
-            {
-                CreationTimeField.SetValue(entity, DateTime.Now);
-            }
+            CreationTimeField.SetValue(entity, DateTime.Now);
             await DbSet.AddAsync(entity);
         }
         public async Task AddAsync(List<T> entities)
