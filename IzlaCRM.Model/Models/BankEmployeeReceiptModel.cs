@@ -7,7 +7,7 @@ namespace IzlaCRM.Entity.Models
     {
         public virtual int TenantId { get; set; }
         public int BankemployeeId { get; set; }
-        public BankEmployee BankeEmployee { get; set; }
+        public BankEmployee BankEmployee { get; set; }
         public ICollection<Payment> Payments { get; set; }
         public int LookUpId { get; set; }
         public string Status { get; set; }

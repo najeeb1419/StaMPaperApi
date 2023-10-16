@@ -28,6 +28,7 @@ namespace IzlaCRM.DAL
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<BankEmployeeReceipt> BankEmployeeReceipts { get; set; }
+        public DbSet<BankEmployeePayment> BankEmployeePayments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Permission>()

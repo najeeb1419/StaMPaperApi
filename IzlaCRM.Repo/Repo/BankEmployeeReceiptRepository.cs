@@ -15,7 +15,7 @@ namespace IzlaCRM.Repo.Repo
 
         public List<BankEmployeeReceiptModel> GetBankEmployeeReceipts()
         {
-            var receipts = DbSet.Include(p => p.BankeEmployee).Where(x => x.IsDeleted == false);
+            var receipts = DbSet.Include(p => p.BankEmployee).Where(x => x.IsDeleted == false);
             return receipts.Select(o => new BankEmployeeReceiptModel()
             {
                 Id = o.Id,
@@ -25,7 +25,7 @@ namespace IzlaCRM.Repo.Repo
                 IsActive = o.IsActive,
                 Status = o.LookUp.DisplayName,
                 Style = o.LookUp.Style,
-                BankeEmployee = o.BankeEmployee
+                BankEmployee = o.BankEmployee
             }).ToList();
 
         }

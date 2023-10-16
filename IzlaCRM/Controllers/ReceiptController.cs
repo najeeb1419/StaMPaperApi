@@ -1,5 +1,4 @@
 ﻿using IzlaCRM.Entity.Entities;
-using IzlaCRM.Entity.Models;
 using IzlaCRM.Repo.IRepo;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -28,11 +27,11 @@ namespace IzlaCRM.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public  IActionResult GetReceipts()
+        public IActionResult GetReceipts()
         {
             try
             {
-                var result =  _unitOfWork.ReceiptRepository.GetReceipts();
+                var result = _unitOfWork.ReceiptRepository.GetReceipts();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -74,8 +73,8 @@ namespace IzlaCRM.Controllers
         {
             try
             {
-            var result=    await _unitOfWork.ReceiptRepository.GetByIdAsync(id);
-            return Ok(result);
+                var result = await _unitOfWork.ReceiptRepository.GetByIdAsync(id);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -89,9 +88,9 @@ namespace IzlaCRM.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateReceipt( Receipt input)
+        public async Task<IActionResult> UpdateReceipt(Receipt input)
         {
-      
+
             try
             {
                 await _unitOfWork.ReceiptRepository.UpdateAsync(input);
