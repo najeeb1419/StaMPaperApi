@@ -20,7 +20,7 @@ namespace IzlaCRM.Repo.Repo
         public User? Finduser(string email, string password)
         {
              var res=DbSet.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
-            return res is null ? null:res ;
+            return res == null ? null:res ;
         }
         public List<User?> GetUserbyTenant(int TenantId)
         {
